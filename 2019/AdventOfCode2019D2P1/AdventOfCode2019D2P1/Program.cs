@@ -42,7 +42,7 @@ namespace AdventOfCode2019D2P1
 
         static void Main(string[] args)
         {
-            string listFile = System.IO.File.ReadAllText(@"C:\Users\aalinn\source\repos\AdventOfCode\2019\AdventOfCode2019D2P1\Intcode File.txt");
+            string listFile = System.IO.File.ReadAllText(@"..\..\..\..\Intcode File.txt");
 
             List<int> inputList = new List<int>();
 
