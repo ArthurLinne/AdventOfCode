@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 
 namespace AdventOfCode2020D23P2
 {
@@ -8,11 +9,25 @@ namespace AdventOfCode2020D23P2
     {
         static void Main()
         {
+            Stopwatch stopWatch = new Stopwatch();            
+
             int[] circleList = Array.ConvertAll<char, int>("952316487".ToCharArray(), x => Int32.Parse(x.ToString()));
 
             CupCircle cupCircle = new CupCircle(circleList, 1000000);
 
-            cupCircle.PlayMultipleRounds(10000000);
+            stopWatch.Start();
+
+            cupCircle.PlayMultipleRounds(1000);
+
+            stopWatch.Stop();
+            // Get the elapsed time as a TimeSpan value.
+            TimeSpan ts = stopWatch.Elapsed;
+
+            // Format and display the TimeSpan value.
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+                ts.Hours, ts.Minutes, ts.Seconds,
+                ts.Milliseconds / 10);
+            Console.WriteLine("RunTime " + elapsedTime);
 
             cupCircle.PrintCircleFinal();
         }
