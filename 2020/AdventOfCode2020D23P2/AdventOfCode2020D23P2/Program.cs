@@ -9,11 +9,15 @@ namespace AdventOfCode2020D23P2
     {
         static void Main()
         {
-            Stopwatch stopWatch = new Stopwatch();            
+            Stopwatch stopWatch = new Stopwatch();
 
-            int[] circleList = Array.ConvertAll<char, int>("952316487".ToCharArray(), x => Int32.Parse(x.ToString()));
+            //int[] circleList = Array.ConvertAll<char, int>("952316487".ToCharArray(), x => Int32.Parse(x.ToString()));
+            int[] circleList = Array.ConvertAll<char, int>("389125467".ToCharArray(), x => Int32.Parse(x.ToString()));
+            //int[] circleList = Array.ConvertAll<char, int>("123456789".ToCharArray(), x => Int32.Parse(x.ToString()));
 
-            CupCircle cupCircle = new CupCircle(circleList, 1000000);
+
+            //CupCircle cupCircle = new CupCircle(circleList, 1000000);
+            CupCircle cupCircle = new CupCircle(circleList, 100);
 
             stopWatch.Start();
 

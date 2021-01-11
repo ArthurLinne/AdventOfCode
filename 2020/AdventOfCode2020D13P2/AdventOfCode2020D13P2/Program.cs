@@ -45,7 +45,7 @@ namespace AdventOfCode2020D13P1
             {
                 Console.WriteLine($"Key: {bus.Key} Value: {bus.Value}");
 
-                ulong modulusPortion = busIdProduct / (ulong)bus.Key;
+                ulong modulusPortion = (ulong)busIdProduct / (ulong)bus.Key;
 
                 ulong otherPortion = 1;
 
@@ -60,6 +60,7 @@ namespace AdventOfCode2020D13P1
                 Console.WriteLine(otherPortion);
 
                 goal += modulusPortion * otherPortion;
+                Console.WriteLine($"goal: {goal}");
             }
 
             goal %= busIdProduct;
@@ -68,6 +69,7 @@ namespace AdventOfCode2020D13P1
 
             Console.WriteLine(goal);
 
+            System.IO.File.WriteAllText(@"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCode2020D13P1\Output.txt", goal.ToString());
         }
     }
 }

@@ -30,7 +30,7 @@ namespace AdventOfCode2020D23P2
 
         }
 
-        public void PlayRound()
+        public void PlayRound(int iteration)
         {
             int currentCup = this.circleList[0];
             int prevCup = currentCup - 1;
@@ -55,6 +55,7 @@ namespace AdventOfCode2020D23P2
 
             int oldInsertIndex = Array.IndexOf(this.circleList, prevCup) + 1;
             int newInsertIndex = oldInsertIndex - 4;
+            Console.WriteLine($"Iteration {iteration}: {(oldInsertIndex - 1 + iteration) % maxLabel}");
 
             int[] newCircleList = new int[circleList.Length];
 
@@ -84,7 +85,8 @@ namespace AdventOfCode2020D23P2
         {
             for (int i = 0; i < iterations; i++)
             {
-                this.PlayRound();
+                this.PlayRound(i);
+                //this.PrintCircleFinal();
             }
         }
 
@@ -132,7 +134,7 @@ namespace AdventOfCode2020D23P2
 
 
             long finalProduct = circleList[nextIndex] * circleList[nextNextIndex];
-            Console.WriteLine(finalProduct);
+            Console.WriteLine($"{circleList[nextIndex]} * {circleList[nextNextIndex]} = {finalProduct}");
         }
 
     }
