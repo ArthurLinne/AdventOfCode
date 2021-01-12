@@ -10,42 +10,45 @@ namespace AdventOfCode2020D23P2
     {
         private int PICKUP_SIZE = 3;
 
-        public int[] circleList;
-        private int maxLabel;        
+        private Dictionary<int, int> circleIndexToLabel = new Dictionary<int, int>();
+        private Dictionary<int, int> circleLabelToIndex = new Dictionary<int, int>();
+
+        private int circleSize;    
 
         public CupCircle(int[] circleInput, int sizeGoal)
         {
-            maxLabel = sizeGoal;
-            this.circleList = new int[sizeGoal];
+            circleSize = sizeGoal;
 
             for (int i = 0; i < sizeGoal; i++)
             {
-                this.circleList[i] = i + 1;
+                circleIndexToLabel[i] = i + 1;
+                circleLabelToIndex[i + 1] = i;
             }
 
             for (int inputIndex = 0; inputIndex < circleInput.Length; inputIndex++)
             {
-                this.circleList[inputIndex] = circleInput[inputIndex];
+                circleIndexToLabel[inputIndex] = circleInput[inputIndex];
+                circleLabelToIndex[circleInput[inputIndex]] = inputIndex;
             }
 
         }
 
         public void PlayRound(int iteration)
         {
-            int currentCup = this.circleList[0];
+            int currentCup = circleIndexToLabel[0];
             int prevCup = currentCup - 1;
             int[] pickedUp = new int[PICKUP_SIZE];
 
             for (int i = 0; i < pickedUp.Length; i++)
             {
-                pickedUp[i] = this.circleList[i + 1];
+                pickedUp[i] = circleIndexToLabel[i + 1];
             }
 
             while (pickedUp.Contains(prevCup) || prevCup == 0)
             {
                 if (prevCup == 0)
                 {
-                    prevCup = maxLabel;
+                    prevCup = circleSize;
                 }
                 else
                 {
@@ -53,33 +56,41 @@ namespace AdventOfCode2020D23P2
                 }
             }
 
-            int oldInsertIndex = Array.IndexOf(this.circleList, prevCup) + 1;
+            int oldInsertIndex = circleLabelToIndex[prevCup] + 1;
             int newInsertIndex = oldInsertIndex - 4;
-            
-            Console.WriteLine($"Iteration {iteration}: {(oldInsertIndex - 1 + iteration) % maxLabel}");
 
-            int[] newCircleList = new int[circleList.Length];
+            //Console.WriteLine($"Iteration {iteration}: {(oldInsertIndex - 1 + iteration) % circleSize}");
 
-            for (int i = 4; i < maxLabel; i++)
+            Dictionary<int, int> newCircleIndexToLabel = new Dictionary<int, int>();
+            Dictionary<int, int> newCircleLabelToIndex = new Dictionary<int, int>();
+
+            for (int i = 4; i < circleSize; i++)
             {
                 if (i < oldInsertIndex)
                 {
-                    newCircleList[i - 4] = circleList[i];
+                    newCircleIndexToLabel[i - 4] = circleIndexToLabel[i];
+                    newCircleLabelToIndex[circleIndexToLabel[i]] = i - 4;
                 }
                 else
                 {
-                    newCircleList[i - 1] = circleList[i];
+                    newCircleIndexToLabel[i - 1] = circleIndexToLabel[i];
+                    newCircleLabelToIndex[circleIndexToLabel[i]] = i - 1;
                 }
             }
 
             for (int i = 0; i < PICKUP_SIZE; i++)
             {
-                newCircleList[newInsertIndex + i] = pickedUp[i];
+                newCircleIndexToLabel[newInsertIndex + i] = pickedUp[i];
+                newCircleLabelToIndex[pickedUp[i]] = newInsertIndex + i;
             }
 
-            newCircleList[maxLabel - 1] = circleList[0];
+            newCircleIndexToLabel[circleSize - 1] = circleIndexToLabel[0];
+            newCircleLabelToIndex[circleIndexToLabel[0]] = circleSize - 1;
 
-            circleList = newCircleList;
+
+            circleIndexToLabel = newCircleIndexToLabel;
+            circleLabelToIndex = newCircleLabelToIndex;
+
         }
 
         public void PlayMultipleRounds(int iterations)
@@ -93,10 +104,11 @@ namespace AdventOfCode2020D23P2
 
         public void PrintCircle()
         {
-            foreach (int label in circleList)
+            for (int index = 0; index < circleSize; index++)
             {
-                Console.Write($"{label} ");
+                Console.Write($"{circleIndexToLabel[index]} ");
             }
+            Console.WriteLine();
         }
 
         public void PrintAbbreviatedCircle(int length)
@@ -104,38 +116,38 @@ namespace AdventOfCode2020D23P2
             Console.WriteLine($"Abbreviated Circle for {length}");
             for (int i = 0; i < length; i++)
             {
-                Console.Write($"{circleList[i]}, ");
+                Console.Write($"{circleIndexToLabel[i]}, ");
             }
             Console.WriteLine("...");
 
-            for (int i = maxLabel - length; i < maxLabel; i++)
+            for (int i = circleSize - length; i < circleSize; i++)
             {
-                Console.Write($"{circleList[i]}, ");
+                Console.Write($"{circleIndexToLabel[i]}, ");
             }
             Console.WriteLine();
         }
 
         public void PrintCircleFinal()
         {
-            int indexOne = Array.IndexOf(this.circleList, 1);
+            int indexOne = circleLabelToIndex[1];
 
             int nextIndex = indexOne + 1;
 
-            if (nextIndex == maxLabel)
+            if (nextIndex == circleSize)
             {
                 nextIndex = 0;
             }
 
             int nextNextIndex = nextIndex + 1;
 
-            if (nextNextIndex == maxLabel)
+            if (nextNextIndex == circleSize)
             {
                 nextNextIndex = 0;
             }
 
 
-            long finalProduct = circleList[nextIndex] * circleList[nextNextIndex];
-            Console.WriteLine($"{circleList[nextIndex]} * {circleList[nextNextIndex]} = {finalProduct}");
+            long finalProduct = circleIndexToLabel[nextIndex] * circleIndexToLabel[nextNextIndex];
+            Console.WriteLine($"{circleIndexToLabel[nextIndex]} * {circleIndexToLabel[nextNextIndex]} = {finalProduct}");
         }
 
     }
