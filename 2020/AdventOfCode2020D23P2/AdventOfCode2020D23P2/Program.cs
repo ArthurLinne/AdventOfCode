@@ -17,7 +17,7 @@ namespace AdventOfCode2020D23P2
 
 
             //CupCircle cupCircle = new CupCircle(circleList, 1000000);
-            CupCircle cupCircle = new CupCircle(circleList, 100);
+            CupCircle cupCircle = new CupCircle(circleList, 1000);
 
             stopWatch.Start();
 

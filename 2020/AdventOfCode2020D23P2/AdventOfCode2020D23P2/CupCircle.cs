@@ -55,6 +55,7 @@ namespace AdventOfCode2020D23P2
 
             int oldInsertIndex = Array.IndexOf(this.circleList, prevCup) + 1;
             int newInsertIndex = oldInsertIndex - 4;
+            
             Console.WriteLine($"Iteration {iteration}: {(oldInsertIndex - 1 + iteration) % maxLabel}");
 
             int[] newCircleList = new int[circleList.Length];
