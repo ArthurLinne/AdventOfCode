@@ -20,7 +20,7 @@ namespace AdventOfCode2020D23P2
 
             stopWatch.Start();
 
-            cupCircle.PlayMultipleRounds(100);
+            cupCircle.PlayMultipleRounds(1000);
 
             stopWatch.Stop();
             // Get the elapsed time as a TimeSpan value.
