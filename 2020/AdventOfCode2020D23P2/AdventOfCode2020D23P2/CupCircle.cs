@@ -68,20 +68,28 @@ namespace AdventOfCode2020D23P2
             {
                 if (i < oldInsertIndex)
                 {
-                    AddCupIndexLabel(i - 4, circleIndexToLabel[i]);
+                    //AddCupIndexLabel(i - 4, circleIndexToLabel[i]);
+                    circleIndexToLabel[i - 4] = circleIndexToLabel[i];
+                    circleLabelToIndex[circleIndexToLabel[i]] = i - 4;
                 }
                 else
                 {
-                    AddCupIndexLabel(i - 1, circleIndexToLabel[i]);
+                    //AddCupIndexLabel(i - 1, circleIndexToLabel[i]);
+                    circleIndexToLabel[i - 1] = circleIndexToLabel[i];
+                    circleLabelToIndex[circleIndexToLabel[i]] = i - 1;
                 }
             }
 
             for (int i = 0; i < PICKUP_SIZE; i++)
             {
-                AddCupIndexLabel(newInsertIndex + i, pickedUp[i]);
+                //AddCupIndexLabel(newInsertIndex + i, pickedUp[i]);
+                circleIndexToLabel[newInsertIndex + i] = pickedUp[i];
+                circleLabelToIndex[pickedUp[i]] = newInsertIndex + i;
             }
 
-            AddCupIndexLabel(circleSize - 1, currentCup);
+            //AddCupIndexLabel(circleSize - 1, currentCup);
+            circleIndexToLabel[circleSize - 1] = currentCup;
+            circleLabelToIndex[currentCup] = circleSize - 1;
         }
 
         public void PlayMultipleRounds(int iterations)
