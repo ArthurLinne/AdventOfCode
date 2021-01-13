@@ -13,9 +13,6 @@ namespace AdventOfCode2020D23P2
         private int[] circleIndexToLabel;
         private int[] circleLabelToIndex;
 
-        private int[] newCircleIndexToLabel;
-        private int[] newCircleLabelToIndex;
-
         private int circleSize;    
 
         public CupCircle(int[] circleInput, int sizeGoal)
@@ -37,10 +34,6 @@ namespace AdventOfCode2020D23P2
                 circleIndexToLabel[inputIndex] = circleInput[inputIndex];
                 circleLabelToIndex[circleInput[inputIndex]] = inputIndex;
             }
-
-            newCircleIndexToLabel = new int[circleSize];
-            newCircleLabelToIndex = new int[circleSize + 1];
-
         }
 
         public void PlayRound(int iteration)
@@ -88,10 +81,7 @@ namespace AdventOfCode2020D23P2
                 AddCupIndexLabel(newInsertIndex + i, pickedUp[i]);
             }
 
-            AddCupIndexLabel(circleSize - 1, circleIndexToLabel[0]);
-            
-            newCircleIndexToLabel.CopyTo(circleIndexToLabel, 0);
-            newCircleLabelToIndex.CopyTo(circleLabelToIndex, 0);
+            AddCupIndexLabel(circleSize - 1, currentCup);
         }
 
         public void PlayMultipleRounds(int iterations)
@@ -105,8 +95,8 @@ namespace AdventOfCode2020D23P2
 
         private void AddCupIndexLabel(int index, int label)
         {
-            newCircleIndexToLabel[index] = label;
-            newCircleLabelToIndex[label] = index;
+            circleIndexToLabel[index] = label;
+            circleLabelToIndex[label] = index;
         }
 
         public void PrintCircle()
