@@ -10,14 +10,21 @@ namespace AdventOfCode2020D23P2
     {
         private int PICKUP_SIZE = 3;
 
-        private Dictionary<int, int> circleIndexToLabel = new Dictionary<int, int>();
-        private Dictionary<int, int> circleLabelToIndex = new Dictionary<int, int>();
+        private int[] circleIndexToLabel;
+        private int[] circleLabelToIndex;
+
+        private int[] newCircleIndexToLabel;
+        private int[] newCircleLabelToIndex;
 
         private int circleSize;    
 
         public CupCircle(int[] circleInput, int sizeGoal)
         {
             circleSize = sizeGoal;
+
+            circleIndexToLabel = new int[sizeGoal];
+            circleLabelToIndex = new int[sizeGoal + 1];
+
 
             for (int i = 0; i < sizeGoal; i++)
             {
@@ -30,6 +37,9 @@ namespace AdventOfCode2020D23P2
                 circleIndexToLabel[inputIndex] = circleInput[inputIndex];
                 circleLabelToIndex[circleInput[inputIndex]] = inputIndex;
             }
+
+            newCircleIndexToLabel = new int[circleSize];
+            newCircleLabelToIndex = new int[circleSize + 1];
 
         }
 
@@ -61,36 +71,27 @@ namespace AdventOfCode2020D23P2
 
             //Console.WriteLine($"Iteration {iteration}: {(oldInsertIndex - 1 + iteration) % circleSize}");
 
-            Dictionary<int, int> newCircleIndexToLabel = new Dictionary<int, int>();
-            Dictionary<int, int> newCircleLabelToIndex = new Dictionary<int, int>();
-
             for (int i = 4; i < circleSize; i++)
             {
                 if (i < oldInsertIndex)
                 {
-                    newCircleIndexToLabel[i - 4] = circleIndexToLabel[i];
-                    newCircleLabelToIndex[circleIndexToLabel[i]] = i - 4;
+                    AddCupIndexLabel(i - 4, circleIndexToLabel[i]);
                 }
                 else
                 {
-                    newCircleIndexToLabel[i - 1] = circleIndexToLabel[i];
-                    newCircleLabelToIndex[circleIndexToLabel[i]] = i - 1;
+                    AddCupIndexLabel(i - 1, circleIndexToLabel[i]);
                 }
             }
 
             for (int i = 0; i < PICKUP_SIZE; i++)
             {
-                newCircleIndexToLabel[newInsertIndex + i] = pickedUp[i];
-                newCircleLabelToIndex[pickedUp[i]] = newInsertIndex + i;
+                AddCupIndexLabel(newInsertIndex + i, pickedUp[i]);
             }
 
-            newCircleIndexToLabel[circleSize - 1] = circleIndexToLabel[0];
-            newCircleLabelToIndex[circleIndexToLabel[0]] = circleSize - 1;
-
-
-            circleIndexToLabel = newCircleIndexToLabel;
-            circleLabelToIndex = newCircleLabelToIndex;
-
+            AddCupIndexLabel(circleSize - 1, circleIndexToLabel[0]);
+            
+            newCircleIndexToLabel.CopyTo(circleIndexToLabel, 0);
+            newCircleLabelToIndex.CopyTo(circleLabelToIndex, 0);
         }
 
         public void PlayMultipleRounds(int iterations)
@@ -98,8 +99,14 @@ namespace AdventOfCode2020D23P2
             for (int i = 0; i < iterations; i++)
             {
                 this.PlayRound(i);
-                //this.PrintCircleFinal();
+                //this.PrintCircle();
             }
+        }
+
+        private void AddCupIndexLabel(int index, int label)
+        {
+            newCircleIndexToLabel[index] = label;
+            newCircleLabelToIndex[label] = index;
         }
 
         public void PrintCircle()

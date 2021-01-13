@@ -16,12 +16,11 @@ namespace AdventOfCode2020D23P2
             //int[] circleList = Array.ConvertAll<char, int>("123456789".ToCharArray(), x => Int32.Parse(x.ToString()));
 
 
-            //CupCircle cupCircle = new CupCircle(circleList, 1000000);
             CupCircle cupCircle = new CupCircle(circleList, 1000000);
 
             stopWatch.Start();
 
-            cupCircle.PlayMultipleRounds(1000);
+            cupCircle.PlayMultipleRounds(100);
 
             stopWatch.Stop();
             // Get the elapsed time as a TimeSpan value.
