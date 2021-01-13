@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AdventOfCodeD15P2
+namespace AdventOfCode2020D15P2
 {
     public class MemoryGame
     {
