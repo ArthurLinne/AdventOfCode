@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventOfCode2020D13P1
 {
@@ -10,20 +12,12 @@ namespace AdventOfCode2020D13P1
 
             int earliestDepartTime = Int32.Parse(busScheduleInput[0]);
 
-            string[] busIdStringList = busScheduleInput[1].Replace("x,", "").Split(",");
-
-            int[] busIdList = new int[busIdStringList.Length];
-
-            for (int index = 0; index < busIdStringList.Length; index++)
-            {
-                busIdList[index] = Int32.Parse(busIdStringList[index]);
-            }
+            List<int> busIdList = busScheduleInput[1].Replace("x,", "").Split(",").ToList().ConvertAll(x => Int32.Parse(x));
 
             int waitTime = -1;
             int correctBusId = -1;
-            bool found = false;
 
-            for (int departureStartTime = earliestDepartTime; true; departureStartTime++)
+            for (int departureStartTime = earliestDepartTime; waitTime == -1; departureStartTime++)
             {
                 foreach (int busId in busIdList)
                 {
@@ -31,15 +25,9 @@ namespace AdventOfCode2020D13P1
                     {
                         waitTime = departureStartTime - earliestDepartTime;
                         correctBusId = busId;
-                        found = true;
                         break;
                     }
                 }
-                if (found)
-                {
-                    break;
-                }
-
             }
 
             Console.WriteLine($"You'll need to wait {waitTime} minutes to catch the {correctBusId} bus. Their product is {waitTime * correctBusId}.");

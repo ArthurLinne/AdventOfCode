@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AdventOfCode2020D12P1
+namespace AdventOfCode2020D12P2
 {
     class Program
     {
@@ -75,7 +75,7 @@ namespace AdventOfCode2020D12P1
                 ReadNavInstruct(instruct);
             }
 
-            Console.WriteLine($"The ship ends up at ({ship_x}, {ship_y}), and the distance is {Math.Abs(ship_x) + Math.Abs(ship_y)}");
+            Console.WriteLine($"The ship ends up at ({ship_x}, {ship_y}), and the distance is {Math.Abs(ship_x) + Math.Abs(ship_y)}.");
         }
     }
 }

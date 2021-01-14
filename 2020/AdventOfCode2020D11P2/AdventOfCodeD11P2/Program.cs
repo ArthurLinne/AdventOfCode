@@ -22,10 +22,10 @@ namespace AdventOfCode2020D11P1
                     for (
                         int length = 1;
                         0 <= rowIndex + length * rowMod
-                        && rowIndex + length * rowMod <= rowLength - 1
-                        && 0 <= columnIndex + length * columnMod
-                        && columnIndex + length * columnMod <= columnLength - 1
-                        && (rowMod != 0 || columnMod != 0);
+                            && rowIndex + length * rowMod <= rowLength - 1
+                            && 0 <= columnIndex + length * columnMod
+                            && columnIndex + length * columnMod <= columnLength - 1
+                            && (rowMod != 0 || columnMod != 0);
                         length++)
                     {
                         if (currentSeatList[rowIndex + length * rowMod][columnIndex + length * columnMod] == '.')
@@ -127,12 +127,6 @@ namespace AdventOfCode2020D11P1
                     }
                 }
             }
-
-            foreach (string line in currentSeatList)
-            {
-                Console.WriteLine(line);
-            }
-            Console.WriteLine();
 
             int totalOccupiedSeats = 0;
 

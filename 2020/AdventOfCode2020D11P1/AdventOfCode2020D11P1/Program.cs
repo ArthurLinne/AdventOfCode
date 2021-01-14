@@ -90,7 +90,7 @@ namespace AdventOfCode2020D11P1
             return newSeatList;
         }
 
-        static void Main(string[] args)
+        static void Main()
         {
             List<string> newSeatList = System.IO.File.ReadAllLines(@"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCode2020D11P1\SeatingArrangement.txt").ToList();
 
