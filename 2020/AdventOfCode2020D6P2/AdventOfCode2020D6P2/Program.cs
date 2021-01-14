@@ -7,7 +7,7 @@ namespace AdventOfCodeD6P2
     {
         static void Main(string[] args)
         {
-            string questionFile = System.IO.File.ReadAllText(@"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCodeD6P1\QuestionFile.txt");
+            string questionFile = System.IO.File.ReadAllText(@"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCode2020D6P1\QuestionFile.txt");
 
             questionFile = questionFile.Replace(Environment.NewLine, "|");
             questionFile = questionFile.Replace("||", "*");

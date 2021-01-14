@@ -11,8 +11,8 @@ namespace AdventOfCode2020D23P2
         {
             Stopwatch stopWatch = new Stopwatch();
 
-            //int[] circleList = Array.ConvertAll<char, int>("952316487".ToCharArray(), x => Int32.Parse(x.ToString()));
-            int[] circleList = Array.ConvertAll<char, int>("389125467".ToCharArray(), x => Int32.Parse(x.ToString()));
+            int[] circleList = Array.ConvertAll<char, int>("952316487".ToCharArray(), x => Int32.Parse(x.ToString()));
+            //int[] circleList = Array.ConvertAll<char, int>("389125467".ToCharArray(), x => Int32.Parse(x.ToString()));
             //int[] circleList = Array.ConvertAll<char, int>("123456789".ToCharArray(), x => Int32.Parse(x.ToString()));
 
             CupCircle cupCircle = new CupCircle(circleList, 1000000);
@@ -20,7 +20,7 @@ namespace AdventOfCode2020D23P2
 
             stopWatch.Start();
 
-            cupCircle.PlayMultipleRounds(1000);
+            cupCircle.PlayMultipleRounds(10000000);
 
             stopWatch.Stop();
             // Get the elapsed time as a TimeSpan value.

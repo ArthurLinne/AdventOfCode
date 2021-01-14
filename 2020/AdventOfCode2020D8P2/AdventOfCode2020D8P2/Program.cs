@@ -5,7 +5,7 @@ namespace AdventOfCode2020D8P2
 {
     class Program
     {
-        static int? EvaluateBootCode(List<Tuple<string, int>> bootCode)
+        static int? EvaluateBootCode(List<(string, int)> bootCode)
         {
             int accumulator = 0;
             int currentIndex = 0;
@@ -48,7 +48,7 @@ namespace AdventOfCode2020D8P2
         {
             string[] bootCodeInput = System.IO.File.ReadAllLines(@"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCode2020D8P1\HandheldBootCode.txt");
 
-            List<Tuple<string, int>> bootCode = new List<Tuple<string, int>>();
+            List<(string, int)> bootCode = new List<(string, int)>();
 
             foreach (string instruction in bootCodeInput)
             {
@@ -58,7 +58,7 @@ namespace AdventOfCode2020D8P2
 
                 int argument = Int32.Parse(instructMod.Substring(instructMod.IndexOf(" ") + 1, instructMod.Length - (instructMod.IndexOf(" ") + 1)));
 
-                Tuple<string, int> fullInstruction = new Tuple<string, int>(operation, argument);
+                (string, int) fullInstruction = (operation, argument);
 
                 bootCode.Add(fullInstruction);
             }
@@ -70,17 +70,20 @@ namespace AdventOfCode2020D8P2
                     case "acc":
                         continue;
                     case "jmp":
-                        bootCode[possibleErrorIndex] = new Tuple<string, int>("nop", bootCode[possibleErrorIndex].Item2);
+                        bootCode[possibleErrorIndex] = ("nop", bootCode[possibleErrorIndex].Item2);
                         break;
                     case "nop":
-                        bootCode[possibleErrorIndex] = new Tuple<string, int>("jmp", bootCode[possibleErrorIndex].Item2);
+                        bootCode[possibleErrorIndex] = ("jmp", bootCode[possibleErrorIndex].Item2);
                         break;
                     
                 }
 
-                if (!(EvaluateBootCode(bootCode) is null))
+                int? bootCodeReturn = EvaluateBootCode(bootCode);
+
+                if (!(bootCodeReturn is null))
                 {
-                    Console.WriteLine(EvaluateBootCode(bootCode));
+                    Console.WriteLine($"The error occurred at index {possibleErrorIndex}.");
+                    Console.WriteLine($"The boot code returns {bootCodeReturn}");
                     break;
                 }
                 else
@@ -90,10 +93,10 @@ namespace AdventOfCode2020D8P2
                         case "acc":
                             continue;
                         case "jmp":
-                            bootCode[possibleErrorIndex] = new Tuple<string, int>("nop", bootCode[possibleErrorIndex].Item2);
+                            bootCode[possibleErrorIndex] = ("nop", bootCode[possibleErrorIndex].Item2);
                             break;
                         case "nop":
-                            bootCode[possibleErrorIndex] = new Tuple<string, int>("jmp", bootCode[possibleErrorIndex].Item2);
+                            bootCode[possibleErrorIndex] = ("jmp", bootCode[possibleErrorIndex].Item2);
                             break;
                     }
                 }

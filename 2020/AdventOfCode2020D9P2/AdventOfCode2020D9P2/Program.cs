@@ -10,14 +10,10 @@ namespace AdventOfCode2020D9P2
         {
             const int PREAMBLE_SIZE = 25;
 
-            string[] xmasCypherFile = System.IO.File.ReadAllLines(@"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCode2020D9P1\XmasCypher.txt");
-
-            List<long> xmasCypherList = new List<long>();
-
-            foreach (string line in xmasCypherFile)
-            {
-                xmasCypherList.Add(Int64.Parse(line));
-            }
+            List<long> xmasCypherList =
+                System.IO.File.ReadAllLines(
+                    @"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCode2020D9P1\XmasCypher.txt"
+                    ).ToList().ConvertAll(x => Int64.Parse(x));
 
             long invalidNumber = 0;
 
@@ -48,7 +44,7 @@ namespace AdventOfCode2020D9P2
                 if (!satisfiesCondition)
                 {
                     invalidNumber = currentValue;
-                    Console.WriteLine($"The first number to fail this condition is {invalidNumber}");
+                    Console.WriteLine($"The first number to fail this condition is {invalidNumber}.");
                     break;
                 }
             }
@@ -59,11 +55,10 @@ namespace AdventOfCode2020D9P2
             {
                 for (int startingIndex = 0; startingIndex < xmasCypherList.Count - startingIndex; startingIndex++)
                 {
-                    if (xmasCypherList.GetRange(startingIndex, listSize).Sum() == invalidNumber)
+                    List<long> encryptionWeaknessList = xmasCypherList.GetRange(startingIndex, listSize);
+
+                    if (encryptionWeaknessList.Sum() == invalidNumber)
                     {
-                        List<long> encryptionWeaknessList = xmasCypherList.GetRange(startingIndex, listSize);
-
-
                         encryptionWeakness = encryptionWeaknessList.Max() + encryptionWeaknessList.Min();
                         break;
                     }
@@ -74,11 +69,7 @@ namespace AdventOfCode2020D9P2
                 }
             }
 
-            Console.WriteLine($"The encryption weakness is {encryptionWeakness}");
-
-
-
-
+            Console.WriteLine($"The encryption weakness is {encryptionWeakness}.");
         }
     }
 }

@@ -8,20 +8,14 @@ namespace AdventOfCode2020D10P1
     {
         static void Main(string[] args)
         {
-            string[] joltageFile = System.IO.File.ReadAllLines(@"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCode2020D10P1\Joltage.txt");
-
-            List<int> joltageList = new List<int>();
-
-            foreach (string joltage in joltageFile)
-            {
-                joltageList.Add(Int32.Parse(joltage));
-            }
+            List<int> joltageList = System.IO.File.ReadAllLines(
+                @"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCode2020D10P1\Joltage.txt"
+                ).ToList().ConvertAll(x => Int32.Parse(x));
 
             joltageList.Add(0);
             joltageList.Add(joltageList.Max() + 3);
 
             joltageList.Sort();
-
             
 
             int joltageDiffOne = 0;
@@ -42,7 +36,7 @@ namespace AdventOfCode2020D10P1
 
             Console.WriteLine($"There are {joltageDiffOne} adapters with a difference of one, and {joltageDiffThree} adapters with a difference of three.");
 
-            Console.WriteLine($"Their product is {joltageDiffOne * joltageDiffThree}");
+            Console.WriteLine($"Their product is {joltageDiffOne * joltageDiffThree}.");
         }
     }
 }

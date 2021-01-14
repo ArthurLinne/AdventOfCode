@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventOfCode2020D9P1
 {
@@ -9,14 +10,10 @@ namespace AdventOfCode2020D9P1
         {
             const int PREAMBLE_SIZE = 25;
 
-            string[] xmasCypherFile = System.IO.File.ReadAllLines(@"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCode2020D9P1\XmasCypher.txt");
-
-            List<long> xmasCypherList = new List<long>();
-
-            foreach (string line in xmasCypherFile)
-            {
-                xmasCypherList.Add(Int64.Parse(line));
-            }
+            List<long> xmasCypherList =
+                System.IO.File.ReadAllLines(
+                    @"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCode2020D9P1\XmasCypher.txt"
+                    ).ToList().ConvertAll(x => Int64.Parse(x));
 
             for (int currentIndex = PREAMBLE_SIZE; currentIndex < xmasCypherList.Count; currentIndex++ )
             {
@@ -44,7 +41,7 @@ namespace AdventOfCode2020D9P1
 
                 if (!satisfiesCondition)
                 {
-                    Console.WriteLine($"The first number to fail this condition is {currentValue}");
+                    Console.WriteLine($"The first number to fail this condition is {currentValue}.");
                     break;
                 }
             }

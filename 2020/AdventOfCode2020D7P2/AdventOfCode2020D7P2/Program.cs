@@ -10,7 +10,7 @@ namespace AdventOfCode2020D7P2
         static int RecursiveBagsContained(
             string color, 
             int multiplier, 
-            Dictionary<string, List<Tuple<string, int>>> bagRules)
+            Dictionary<string, List<(string, int)>> bagRules)
         {
             int totalBags = 0;
 
@@ -21,7 +21,7 @@ namespace AdventOfCode2020D7P2
 
             else
             {
-                foreach (Tuple<string, int> innerBag in bagRules[color])
+                foreach ((string, int) innerBag in bagRules[color])
                 {
                     totalBags += RecursiveBagsContained(innerBag.Item1, multiplier * innerBag.Item2, bagRules);
                 }
@@ -37,7 +37,7 @@ namespace AdventOfCode2020D7P2
         {
             string[] bagRulesFile = System.IO.File.ReadAllLines(@"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCode2020D7P1\BagRulesFile.txt");
 
-            Dictionary<string, List<Tuple<string, int>>> baseBagRules = new Dictionary<string, List<Tuple<string, int>>>();
+            Dictionary<string, List<(string, int)>> baseBagRules = new Dictionary<string, List<(string, int)>>();
 
             foreach (string line in bagRulesFile)
             {
@@ -48,13 +48,13 @@ namespace AdventOfCode2020D7P2
 
                 string[] innerBagsList = innerBags.Split(",");
 
-                List<Tuple<string, int>> innerBagAmountList = new List<Tuple<string, int>>();
+                List<(string, int)> innerBagAmountList = new List<(string, int)>();
 
                 foreach (string innerBag in innerBagsList)
                 {
                     if (innerBag == "no other")
                     {
-                        Tuple<string, int> emptyBag = new Tuple<string, int>("None", 0);
+                        (string, int) emptyBag = ("None", 0);
 
                         innerBagAmountList.Add(emptyBag);
 
@@ -65,7 +65,7 @@ namespace AdventOfCode2020D7P2
 
                     int innerBagQuantity = Int32.Parse(innerBag[0].ToString());
 
-                    Tuple<string, int> innerBagAmount = new Tuple<string, int>(insertInnerBag, innerBagQuantity);
+                    (string, int) innerBagAmount = (insertInnerBag, innerBagQuantity);
 
                     innerBagAmountList.Add(innerBagAmount);
                 }

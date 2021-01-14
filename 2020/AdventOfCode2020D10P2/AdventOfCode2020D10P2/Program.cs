@@ -8,14 +8,9 @@ namespace AdventOfCode2020D10P2
     {
         static void Main(string[] args)
         {
-            string[] joltageFile = System.IO.File.ReadAllLines(@"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCode2020D10P1\Joltage.txt");
-
-            List<int> joltageList = new List<int>();
-
-            foreach (string joltage in joltageFile)
-            {
-                joltageList.Add(Int32.Parse(joltage));
-            }
+            List<int> joltageList = System.IO.File.ReadAllLines(
+                @"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCode2020D10P1\Joltage.txt"
+                ).ToList().ConvertAll(x => Int32.Parse(x));
 
             joltageList.Add(0);
             joltageList.Add(joltageList.Max() + 3);
@@ -46,12 +41,13 @@ namespace AdventOfCode2020D10P2
                 }
             }
 
-            Dictionary<int, int> repeatedOneDict = new Dictionary<int, int>();
-
-            repeatedOneDict.Add(1, 1);
-            repeatedOneDict.Add(2, 2);
-            repeatedOneDict.Add(3, 4);
-            repeatedOneDict.Add(4, 7);
+            Dictionary<int, int> repeatedOneDict = new Dictionary<int, int>
+            {
+                { 1, 1 },
+                { 2, 2 },
+                { 3, 4 },
+                { 4, 7 }
+            };
 
             long totalCombinations = 1;
 

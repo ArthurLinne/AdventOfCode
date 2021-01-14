@@ -5,12 +5,12 @@ namespace AdventOfCode2020D5P2
 {
     class Program
     {
-        public static List<int> EvaluateSeatInstructions(
+        public static (int, int) EvaluateSeatInstructions(
             string seatInstructions,
             int rowInstructionCount,
             int columnInstructionCount)
         {
-            List<int> rowColumn = new List<int>();
+            (int, int) rowColumn;
 
             string rowInstructions = seatInstructions.Substring(0, rowInstructionCount);
             string columnInstructions = seatInstructions.Substring(rowInstructionCount, columnInstructionCount);
@@ -34,8 +34,6 @@ namespace AdventOfCode2020D5P2
                 }
             }
 
-            rowColumn.Add(minRow);
-
             foreach (char instruct in columnInstructions)
             {
                 switch (instruct)
@@ -49,10 +47,11 @@ namespace AdventOfCode2020D5P2
                 }
             }
 
-            rowColumn.Add(minColumn);
+            rowColumn = (minRow, minColumn);
 
             return rowColumn;
         }
+
         static void Main(string[] args)
         {
             string[] seatList = System.IO.File.ReadAllLines(@"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCode2020D5P1\SeatFile.txt");
@@ -61,9 +60,9 @@ namespace AdventOfCode2020D5P2
 
             foreach (string seat in seatList)
             {
-                List<int> rowColumn = EvaluateSeatInstructions(seat, 7, 3);
-                int row = rowColumn[0];
-                int column = rowColumn[1];
+                (int, int) rowColumn = EvaluateSeatInstructions(seat, 7, 3);
+                int row = rowColumn.Item1;
+                int column = rowColumn.Item2;
 
                 int seatId = row * 8 + column;
 
@@ -76,7 +75,7 @@ namespace AdventOfCode2020D5P2
                 {
                     if (seatIdList.Contains(seatId - 1) && seatIdList.Contains(seatId + 1))
                     {
-                        Console.WriteLine($"Your seat ID is {seatId}");
+                        Console.WriteLine($"Your seat ID is {seatId}.");
                     }
                 }
             }
