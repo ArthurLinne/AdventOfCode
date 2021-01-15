@@ -19,9 +19,7 @@ namespace AdventOfCode2020D13P1
             for (int index = 0; index < busIdStringList.Length; index++)
             {
                 busIdList[index] = Int64.Parse(busIdStringList[index]);
-
                 busIdProduct *= busIdList[index];
-                Console.WriteLine(busIdProduct);
             }
 
             Dictionary<long, long> busTimeOffset = new Dictionary<long, long>();
@@ -44,8 +42,6 @@ namespace AdventOfCode2020D13P1
 
             foreach (KeyValuePair<long, long> bus in busTimeOffset)
             {
-                Console.WriteLine($"Key: {bus.Key} Value: {bus.Value}");
-
                 long modulusPortion = busIdProduct / bus.Key;
 
                 long otherPortion = 1;
@@ -56,30 +52,13 @@ namespace AdventOfCode2020D13P1
                     otherPortion %= bus.Key;
                 }
 
-                
-
-                Console.WriteLine($"Checking for consistency: {(otherPortion * modulusPortion) % bus.Key}");
-
-                Console.WriteLine(modulusPortion);
-                Console.WriteLine(otherPortion);
-
                 long addition = modulusPortion * otherPortion * bus.Value;
-
-                Console.WriteLine($"addition % key = {addition % bus.Key}");
 
                 goal += addition;
                 goal %= busIdProduct;
-                Console.WriteLine($"goal: {goal}");
             }
 
-            Console.WriteLine(busIdProduct);
-
-            Console.WriteLine(goal);
-
-            foreach (long busId in busTimeOffset.Keys)
-            {
-                Console.WriteLine($"{busId} leaves after {goal % (long)busId} minutes.");
-            }
+            Console.WriteLine($"The earliest time that all buses leave at the right offsets is {goal}.");
 
             System.IO.File.WriteAllText(@"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCode2020D13P1\Output.txt", goal.ToString());
         }

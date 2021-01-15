@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AdventOfCode2020D14P2
@@ -9,14 +10,14 @@ namespace AdventOfCode2020D14P2
 
         public static string ApplyBitmask(string bitmask, int value)
         {
-            string binaryValue = Convert.ToString(value, 2);
+            StringBuilder binaryValueBuilder = new StringBuilder(Convert.ToString(value, 2), bitmask.Length);
 
-            int binaryValueLength = binaryValue.Length;
-
-            for (int stringIndex = 0; stringIndex < bitmask.Length - binaryValueLength; stringIndex++)
+            for (int stringIndex = 0; binaryValueBuilder.Length < bitmask.Length; stringIndex++)
             {
-                binaryValue = "0" + binaryValue;
+                binaryValueBuilder.Insert(0, "0");
             }
+
+            string binaryValue = binaryValueBuilder.ToString();
 
             for (int stringIndex = 0; stringIndex < bitmask.Length; stringIndex++)
             {                
@@ -47,11 +48,12 @@ namespace AdventOfCode2020D14P2
             return binaryValue;
         }
 
-        public static List<ulong> EvaluateFloatingBits(string binaryValue)
+        public static List<long> EvaluateFloatingBits(string binaryValue)
         {
-            List<string> valuePossibilities = new List<string>();
-
-            valuePossibilities.Add(binaryValue);
+            List<string> valuePossibilities = new List<string>
+            {
+                binaryValue
+            };
 
             while (valuePossibilities[0].IndexOf("X") >= 0)
             {
@@ -69,12 +71,7 @@ namespace AdventOfCode2020D14P2
                 valuePossibilities = valuePossibilityAddition;
             }
 
-            List<ulong> convertedValueList = new List<ulong>();
-
-            foreach (string possibleValue in valuePossibilities)
-            {
-                convertedValueList.Add(Convert.ToUInt64(possibleValue, 2));
-            }
+            List<long> convertedValueList = valuePossibilities.ConvertAll(x => Convert.ToInt64(x, 2));
 
             return convertedValueList;
         }
@@ -86,7 +83,7 @@ namespace AdventOfCode2020D14P2
 
             string currentBitmask = "";
 
-            Dictionary<ulong, int> memory = new Dictionary<ulong, int>();
+            Dictionary<long, int> memory = new Dictionary<long, int>();
 
             foreach (string line in bitmaskFile)
             {
@@ -100,29 +97,16 @@ namespace AdventOfCode2020D14P2
 
                     int value = Int32.Parse(line.Substring(line.IndexOf("=") + 2, line.Length - line.IndexOf("=") - 2));
 
-                    foreach (ulong possibleMemoryIndex in EvaluateFloatingBits(ApplyBitmask(currentBitmask, memoryIndex)))
+                    foreach (long possibleMemoryIndex in EvaluateFloatingBits(ApplyBitmask(currentBitmask, memoryIndex)))
                     {
-                        if (memory.ContainsKey(possibleMemoryIndex))
-                        {
-                            memory[possibleMemoryIndex] = value;
-                        }
-                        else
-                        {
-                            memory.Add(possibleMemoryIndex, value);
-                        }
+                        memory[possibleMemoryIndex] = value;
                     }                    
                 }
             }
 
-            ulong totalValue = 0;
-
-            foreach (int value in memory.Values)
-            {
-                totalValue += (ulong)value;
-            }
+            long totalValue = memory.Values.Sum(x => (long)x);
 
             Console.WriteLine($"The total of all values is {totalValue}");
-
         }
     }
 }

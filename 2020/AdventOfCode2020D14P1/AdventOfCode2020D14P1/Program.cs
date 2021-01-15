@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace AdventOfCode2020D14P1
 {
     class Program
     {
 
-        public static ulong ApplyBitmask(string bitmask, int value)
+        public static long ApplyBitmask(string bitmask, int value)
         {
-            string binaryValue = Convert.ToString(value, 2);
+            StringBuilder binaryValueBuilder = new StringBuilder(Convert.ToString(value, 2), bitmask.Length);
 
-            int binaryValueLength = binaryValue.Length;
-
-            for (int stringIndex = 0; stringIndex < bitmask.Length - binaryValueLength; stringIndex++)
+            for (int stringIndex = 0; binaryValueBuilder.Length < bitmask.Length; stringIndex++)
             {
-                binaryValue = "0" + binaryValue;
+                binaryValueBuilder.Insert(0, "0");
             }
+
+            string binaryValue = binaryValueBuilder.ToString();
 
             for (int stringIndex = 0; stringIndex < bitmask.Length; stringIndex++)
             {
@@ -43,7 +45,7 @@ namespace AdventOfCode2020D14P1
                 }
             }
 
-            ulong maskedValue = Convert.ToUInt64(binaryValue, 2);
+            long maskedValue = Convert.ToInt64(binaryValue, 2);
             
             return maskedValue;
         }
@@ -55,7 +57,7 @@ namespace AdventOfCode2020D14P1
 
             string currentBitmask = "";
 
-            Dictionary<int, ulong> memory = new Dictionary<int, ulong>();
+            Dictionary<int, long> memory = new Dictionary<int, long>();
 
             foreach (string line in bitmaskFile)
             {
@@ -69,26 +71,13 @@ namespace AdventOfCode2020D14P1
 
                     int value = Int32.Parse(line.Substring(line.IndexOf("=") + 2, line.Length - line.IndexOf("=") - 2));
 
-                    if (memory.ContainsKey(memoryIndex))
-                    {
-                        memory[memoryIndex] = ApplyBitmask(currentBitmask, value);
-                    }
-                    else
-                    {
-                        memory.Add(memoryIndex, ApplyBitmask(currentBitmask, value));
-                    }
+                    memory[memoryIndex] = ApplyBitmask(currentBitmask, value);
                 }
             }
 
-            ulong totalValue = 0;
-
-            foreach (ulong value in memory.Values)
-            {
-                totalValue += value;
-            }
+            long totalValue = memory.Values.Sum();
 
             Console.WriteLine($"The total of all values is {totalValue}");
-
         }
     }
 }
