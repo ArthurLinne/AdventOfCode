@@ -27,7 +27,7 @@ namespace AdventOfCode2020D18P2
             }
             numbers.Add(Int32.Parse(numberString));
 
-            int currentOperationIndex = 0;
+            int currentOperationIndex;
 
             while (numbers.Count > 1)
             {
@@ -51,13 +51,14 @@ namespace AdventOfCode2020D18P2
                         newNumber = numbers[currentOperationIndex] * numbers[currentOperationIndex + 1];
                         break;
                 }
+
+                operations.RemoveAt(currentOperationIndex);
+
                 numbers.RemoveAt(currentOperationIndex);
                 numbers[currentOperationIndex] = newNumber;
-                operations.RemoveAt(currentOperationIndex);
             }
 
             return numbers[0];
-
         }
 
         public static long EvaluateComplexLine(string inputLine)
@@ -101,10 +102,7 @@ namespace AdventOfCode2020D18P2
                     priorString
                     + evaluatedExp.ToString()
                     + postString;
-
             }
-
-
         }
 
         static void Main(string[] args)

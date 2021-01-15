@@ -36,18 +36,9 @@ namespace AdventOfCode2020D19P2
 
             foreach (string possibleMessage in possibleMessageList)
             {
-                //Console.WriteLine($"Checking {possibleMessage}:");
-
                 if (MessageRule.EvaluateRecursiveMessage(possibleMessage))
                 {
-                    //Console.WriteLine($"{possibleMessage} satisfies rule 0.");
-                    //Console.WriteLine();
                     totalMatching++;
-                }
-                else
-                {
-                    //Console.WriteLine($"{possibleMessage} does not satisfy rule 0.");
-                    //Console.WriteLine();
                 }
             }
 

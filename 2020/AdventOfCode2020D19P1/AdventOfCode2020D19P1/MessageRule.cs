@@ -53,29 +53,27 @@ namespace AdventOfCode2020D19P1
 
         public (bool matchFound, int returnedMessageIndex) EvaluateMessage(string message, int messageIndex = 0, string depth = "")
         {
-            //Console.WriteLine($"{depth} Entered Rule {ruleId}");
             bool failure = false;
 
             if (this.letter != DEFAULT_LETTER)
             {
                 if (messageIndex >= message.Length)
                 {
-                    //Console.WriteLine($"{depth} Failed rule {ruleId}.");
                     return (false, -1);
                 }
 
                 else if (message[messageIndex] == this.letter)
                 {
-                    //Console.WriteLine($"{depth} Succeeded rule {ruleId}.");
                     messageIndex++;
                     return (true, messageIndex);
                 }
+
                 else
                 {
-                    //Console.WriteLine($"{depth} Failed rule {ruleId}.");
                     return (false, -1);
                 }
             }
+
             else
             {
                 int holdingIndex = messageIndex;
@@ -98,24 +96,22 @@ namespace AdventOfCode2020D19P1
                             break;
                         }
                     }
+
                     if (!failure)
                     {
                         break;
                     }
-
                 }
 
                 if (failure)
                 {
-                    //Console.WriteLine($"{depth} Failed rule {ruleId}.");
                     return (false, -1);
                 }
+
                 else
                 {
-                    //Console.WriteLine($"{depth} Succeeded rule {ruleId}.");
                     return (true, messageIndex);
                 }
-
             }
         }
 

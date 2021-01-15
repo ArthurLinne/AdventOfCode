@@ -152,7 +152,7 @@ namespace AdventOfCode2020D17P1
             return (xMax + 1, xMin - 1, yMax + 1, yMin - 1, zMax + 1, zMin - 1);
         }
 
-        static void Main(string[] args)
+        static void Main()
         {
             string[] pocketDimensionSeed = System.IO.File.ReadAllLines(@"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCode2020D17P1\PocketDimensionSeed.txt");
 

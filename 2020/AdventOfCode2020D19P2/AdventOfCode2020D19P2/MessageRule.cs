@@ -27,7 +27,14 @@ namespace AdventOfCode2020D19P2
 
         public static bool EvaluateRecursiveMessage(string message)
         {
-            int availableSlots = message.Length / 8;
+            // Note that for 31 and 42, the rules that get recurred in the problem,
+            // both have the same minimum and maximum viable length of 8.
+            // Thus we can simplify things greatly by just dividing the message to check
+            // into chunks of 8, and then determining if those match 31 and 42 in a way
+            // that works with the new versions of rules 8 and 11.
+            // Suffice it to say, this problem could get a lot more complicated, but we live in the best timeline.
+            
+            int availableSlots = message.Length / fullRuleSet[31].minViableMessage;
 
             for (int count31 = 1; count31 < availableSlots - count31; count31++)
             {
@@ -152,7 +159,6 @@ namespace AdventOfCode2020D19P2
 
             }
         }
-
 
         public (int minViable, int maxViable) DetermineMinMaxViableMessage()
         {

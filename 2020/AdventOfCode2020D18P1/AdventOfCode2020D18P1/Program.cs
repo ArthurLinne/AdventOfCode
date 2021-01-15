@@ -40,26 +40,22 @@ namespace AdventOfCode2020D18P1
                         newNumber = numbers[0] * numbers[1];
                         break;
                 }
+
+                operations.RemoveAt(0);
+
                 numbers.RemoveAt(0);
                 numbers[0] = newNumber;
-                operations.RemoveAt(0);
             }
 
             return numbers[0];
-
         }
 
         public static long EvaluateComplexLine(string inputLine)
         {
             string complexLine = inputLine;
 
-            while (true)
+            while (complexLine.Contains(")"))
             {
-                if (!complexLine.Contains(")"))
-                {
-                    return EvaluateSimpleLine(complexLine);
-                }
-
                 int firstCloseIndex = complexLine.IndexOf(")");
 
                 int lastPriorOpenIndex = complexLine.Substring(0, firstCloseIndex).LastIndexOf("(");
@@ -90,13 +86,12 @@ namespace AdventOfCode2020D18P1
                     priorString
                     + evaluatedExp.ToString()
                     + postString;
-
             }
 
-
+            return EvaluateSimpleLine(complexLine);
         }
 
-        static void Main(string[] args)
+        static void Main()
         {
             string[] homeworkInput = System.IO.File.ReadAllLines(@"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCode2020D18P1\HomeworkInput.txt");
 
@@ -109,7 +104,6 @@ namespace AdventOfCode2020D18P1
             }
 
             Console.WriteLine($"The sum of all expressions is {evaluationSum}.");
-
         }
     }
 }

@@ -8,53 +8,36 @@ namespace AdventOfCode2020D16P1
     {
         static void Main(string[] args)
         {
-            string[] trainTicketInput = System.IO.File.ReadAllLines(@"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCode2020D16P1\TrainTicket.txt");
-
             Dictionary<string, int[]> fieldRules = new Dictionary<string, int[]>();
             List<int> yourTicket;
             List<List<int>> nearbyTickets = new List<List<int>>();
 
-            bool insertYourTicket = false;
-            bool insertNearbyTickets = false;
+            string ticketInput = System.IO.File.ReadAllText(@"C:\Users\aalinn\source\repos\AdventOfCode\2020\AdventOfCode2020D16P1\TrainTicket.txt");
 
-            foreach (string line in trainTicketInput)
+            ticketInput = ticketInput.Replace(Environment.NewLine, "|");
+            ticketInput = ticketInput.Replace("||", "*");
+
+            string[] ticketInputArray = ticketInput.Split("*");
+
+            foreach (string line in ticketInputArray[0].Split("|"))
             {
-                if (line == "" || line == "nearby tickets:")
-                {
-                    continue;
-                }
+                string field = line.Substring(0, line.IndexOf(":"));
 
-                if (line == "your ticket:")
-                {
-                    insertYourTicket = true;
-                    continue;
-                }
+                int[] ruleList = new int[4];
 
-                if (insertYourTicket)
-                {
-                    yourTicket = line.Split(",").ToList().ConvertAll(x => Int32.Parse(x));
-                    insertYourTicket = false;
-                    insertNearbyTickets = true;
-                    continue;
-                }
+                ruleList[0] = Int32.Parse(line.Substring(line.IndexOf(":") + 2, line.IndexOf("-") - line.IndexOf(":") - 2));
+                ruleList[1] = Int32.Parse(line.Substring(line.IndexOf("-") + 1, line.IndexOf(" or") - line.IndexOf("-") - 1));
+                ruleList[2] = Int32.Parse(line.Substring(line.IndexOf("or ") + 3, line.LastIndexOf("-") - line.IndexOf("or ") - 3));
+                ruleList[3] = Int32.Parse(line.Substring(line.LastIndexOf("-") + 1, line.Length - line.LastIndexOf("-") - 1));
 
-                if (insertNearbyTickets)
-                {
-                    nearbyTickets.Add(line.Split(",").ToList().ConvertAll(x => Int32.Parse(x)));
-                }
-                else
-                {
-                    string field = line.Substring(0, line.IndexOf(":"));
+                fieldRules[field] = ruleList;
+            }
 
-                    int[] ruleList = new int[4];
+            yourTicket = ticketInputArray[1].Replace("your ticket:|", "").Split(",").ToList().ConvertAll(x => Int32.Parse(x));
 
-                    ruleList[0] = Int32.Parse(line.Substring(line.IndexOf(":") + 2, line.IndexOf("-") - line.IndexOf(":") - 2));
-                    ruleList[1] = Int32.Parse(line.Substring(line.IndexOf("-") + 1, line.IndexOf(" or") - line.IndexOf("-") - 1));
-                    ruleList[2] = Int32.Parse(line.Substring(line.IndexOf("or ") + 3, line.LastIndexOf("-") - line.IndexOf("or ") - 3));
-                    ruleList[3] = Int32.Parse(line.Substring(line.LastIndexOf("-") + 1, line.Length - line.LastIndexOf("-") - 1));
-
-                    fieldRules.Add(field, ruleList);
-                }
+            foreach (string line in ticketInputArray[2].Replace("nearby tickets:|", "").Split("|"))
+            {
+                nearbyTickets.Add(line.Split(",").ToList().ConvertAll(x => Int32.Parse(x)));
             }
 
             int errorRate = 0;
