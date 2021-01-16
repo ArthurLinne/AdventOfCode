@@ -151,8 +151,9 @@ namespace AdventOfCode2020D23P2
             }
 
 
-            long finalProduct = circleIndexToLabel[nextIndex] * circleIndexToLabel[nextNextIndex];
+            long finalProduct = (long)circleIndexToLabel[nextIndex] * (long)circleIndexToLabel[nextNextIndex];
             Console.WriteLine($"{circleIndexToLabel[nextIndex]} * {circleIndexToLabel[nextNextIndex]} = {finalProduct}");
+            // 907135 * 401051 = 363807398885
         }
 
     }
